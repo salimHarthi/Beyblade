@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://detuwq1de4y4d"]
+[gd_scene load_steps=5 format=3 uid="uid://detuwq1de4y4d"]
 
 [ext_resource type="Script" path="res://levels/battle_level.gd" id="1_4itcq"]
-[ext_resource type="PackedScene" uid="uid://v8xg51dx15d8" path="res://bayblade/byblade.tscn" id="1_gffxu"]
 [ext_resource type="Texture2D" uid="uid://3iwgcv1djdw" path="res://levels/sprites/arena.png" id="1_x21s4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bi0h3"]
@@ -10132,7 +10131,6 @@ sources/0 = SubResource("TileSetAtlasSource_bi0h3")
 
 [node name="BattleLevel" type="Node2D"]
 script = ExtResource("1_4itcq")
-PlayerScene = ExtResource("1_gffxu")
 
 [node name="TileMap" type="TileMap" parent="."]
 scale = Vector2(0.6, 0.6)

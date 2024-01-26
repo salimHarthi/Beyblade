@@ -1,27 +1,50 @@
 extends CharacterBody2D
 class_name Byblade
 
+signal on_damage
 const max_speed = 300
-const accel = 10
+const accel = 15
 const fric = 10
-const bounce_factor = 0.5
+const bounce_factor = 0.8
 const dash_speed = 600
+const max_helth = 10000
 var dash_duration = 0.2
 var is_dashing = false
 var can_Dash = true
 var direction = Vector2.ZERO
-var helth = 1000
-var super_state = false
+var helth = 10000: 
+	set(new_value):
+		helth=new_value
+		emit_signal('on_damage')
+	
+var super_state = false : 
+	set(new_value):
+		super_state=new_value
+
+var PlayersArray = []
+
 
 func _ready() -> void:
+	$AnimationPlayer.play("idel")
 	motion_mode=CharacterBody2D.MOTION_MODE_FLOATING
+	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+		$Camera2D.enabled = false
+	for i in GameManager.Players:
+		if(multiplayer.get_unique_id() !=i):
+			PlayersArray.append(str(i))
+
 
 func _physics_process(delta: float) -> void:
+	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id(): return
 	movment()
 	dash(delta)
 	collide()
 	move_and_slide()
-	start_super_state()
+	if Input.is_action_just_pressed('super_state') && !super_state:
+		start_super_state()
+
+
 	
 	
 func movment()->void:
@@ -44,8 +67,9 @@ func collide( )-> void:
 		if !collision_info.get_collider():
 			return
 		var collider_name = collision_info.get_collider().name
-		
-		if collider_name == "Enemy":
+
+		if PlayersArray.has(collider_name):
+			print('collid: ', collider_name)
 			var collider_velocity = collision_info.get_collider_velocity()
 			var normal = collision_info.get_normal()
 			# Calculate the new velocity based on the collider's velocity and the collision normal
@@ -63,12 +87,11 @@ func dash(delta:float)-> void:
 		dash_duration -= delta
 		if dash_duration <= 0:
 			stop_dash()
-		
 
 func start_super_state():
-	if Input.is_action_just_pressed('super_state'):
 		super_state =true
-		print('super_state',super_state)
+		$AnimationPlayer.play("super_state")
+		print('super_state',super_state,multiplayer.get_unique_id())
 		$SuperState.start()
 	
 func start_dash():
@@ -80,28 +103,21 @@ func start_dash():
 func stop_dash():
 	is_dashing = false
 	dash_duration = 0
-#func bounce_power_calc()->float:
-	#var bounce_power = collision_info.get_collider_velocity().length() - velocity.length()
-	#return 0
-	#if(bounce_power<0):
-		#print("bounce_power win",bounce_power)
-		#return bounce_power * bounce_factor
-	#elif(bounce_power==0):
-		#print("bounce_power idel",bounce_power)
-		#return bounce_power * bounce_factor
-	#else:
-		#print("bounce_power loos",bounce_power)	
-		#return bounce_power * bounce_factor
+
 
 func _on_dash_timer_timeout() -> void:
 	can_Dash =true
 	
+@rpc('any_peer','call_local')
 func take_damage(damage:float):
 	helth -= damage
-	#if (helth <= 0):
-		#queue_free()
-	
+	print('taking damage: ',name)
 
+	if (helth <= 0):
+		queue_free()
+	
 
 func _on_super_state_timeout() -> void:
 	super_state = false
+
+	$AnimationPlayer.play("idel")

@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://8aerk712i3lg"]
+[gd_scene load_steps=8 format=3 uid="uid://8aerk712i3lg"]
 
 [ext_resource type="Script" path="res://enemy/enemy.gd" id="1_kcb8o"]
 [ext_resource type="Texture2D" uid="uid://cjmn2ngvtber4" path="res://bayblade/sprite/Beyblades2_prev_ui.png" id="2_aadk2"]
 [ext_resource type="Script" path="res://scripts/hurtBox.gd" id="3_pd0g4"]
+[ext_resource type="PackedScene" uid="uid://d7r8ijqkasiu" path="res://assets/helth_bar.tscn" id="4_wykdj"]
+[ext_resource type="Script" path="res://scripts/hitBox.gd" id="5_p0nw4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i68b2"]
 radius = 29.0
@@ -20,10 +22,24 @@ vframes = 7
 frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_i68b2")
 
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource("3_pd0g4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+visible = false
 shape = SubResource("CircleShape2D_dok3f")
+
+[node name="HelthBar" parent="." instance=ExtResource("4_wykdj")]
+offset_left = -42.0
+offset_top = -62.0
+offset_right = -42.0
+offset_bottom = -62.0
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("5_p0nw4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox"]
+polygon = PackedVector2Array(-1, -30, 0, 31, 24, 25, 32, 0, 24, -20)

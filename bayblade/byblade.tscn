@@ -1,17 +1,89 @@
-[gd_scene load_steps=6 format=3 uid="uid://v8xg51dx15d8"]
+[gd_scene load_steps=14 format=3 uid="uid://v8xg51dx15d8"]
 
 [ext_resource type="Script" path="res://bayblade/byblade.gd" id="1_hpstw"]
 [ext_resource type="Texture2D" uid="uid://cjmn2ngvtber4" path="res://bayblade/sprite/Beyblades2_prev_ui.png" id="2_11dkp"]
 [ext_resource type="Script" path="res://bayblade/Sprite2D.gd" id="2_keg4l"]
+[ext_resource type="PackedScene" uid="uid://d7r8ijqkasiu" path="res://assets/helth_bar.tscn" id="5_02kji"]
 [ext_resource type="Script" path="res://scripts/hitBox.gd" id="5_p8urh"]
+[ext_resource type="Script" path="res://scripts/hurtBox.gd" id="6_4uv4v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_td6v4"]
 radius = 29.0172
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pwylm"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = false
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:super_state")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8dhfv"]
+radius = 32.5576
+
+[sub_resource type="Animation" id="Animation_kcjbd"]
+resource_name = "super_state"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.831373, 0.831373, 1), Color(1, 0.431373, 0.47451, 1), Color(1, 0.831373, 0.831373, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mqpr4"]
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.831373, 0.831373, 1), Color(1, 0.180392, 0.333333, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gl2j3"]
+resource_name = "idel"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sxug5"]
+_data = {
+"RESET": SubResource("Animation_mqpr4"),
+"idel": SubResource("Animation_gl2j3"),
+"super_state": SubResource("Animation_kcjbd")
+}
 
 [node name="Byblade" type="CharacterBody2D"]
 script = ExtResource("1_hpstw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.831373, 0.831373, 1)
 texture = ExtResource("2_11dkp")
 hframes = 11
 vframes = 7
@@ -37,6 +109,27 @@ zoom = Vector2(2, 2)
 [node name="SuperState" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="HelthBar" parent="." instance=ExtResource("5_02kji")]
+offset_left = -45.0
+offset_top = -62.0
+offset_right = -45.0
+offset_bottom = -62.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_pwylm")
+
+[node name="HurtBox" type="Area2D" parent="."]
+visible = false
+script = ExtResource("6_4uv4v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_8dhfv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sxug5")
+}
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="SuperState" to="." method="_on_super_state_timeout"]

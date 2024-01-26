@@ -5,9 +5,11 @@ const max_speed = 200
 const accel = 10
 const fric = 10
 const bounce_factor = 0.5
+const max_helth = 1000
 var image:Sprite2D
 var helth = 1000
-
+var super_state = false
+signal on_damage
 func _ready() -> void:
 	image = $Sprite2D
 	motion_mode=CharacterBody2D.MOTION_MODE_FLOATING
@@ -20,6 +22,8 @@ func _physics_process(delta: float) -> void:
 func collide() -> void:
 	for i in get_slide_collision_count():
 		var collision_info = get_slide_collision(i)
+		if !collision_info.get_collider():
+			return
 		var collider_name = collision_info.get_collider().name
 
 		if collider_name == "Byblade":
@@ -38,6 +42,7 @@ func byblade_rotate(delta:float)->void:
 
 func take_damage(damage:float):
 	helth -= damage
+	emit_signal('on_damage')
 	print("helth",helth)
 	if (helth <= 0):
 		queue_free()

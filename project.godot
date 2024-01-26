@@ -14,6 +14,10 @@ config/name="Beyblade"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameManager="*res://multiplayer/gameManager.gd"
+
 [display]
 
 window/size/viewport_width=640
