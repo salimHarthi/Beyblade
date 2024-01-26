@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://detuwq1de4y4d"]
+
+[ext_resource type="PackedScene" uid="uid://v8xg51dx15d8" path="res://bayblade/byblade.tscn" id="1_gffxu"]
+[ext_resource type="Texture2D" uid="uid://bshi0ghxhmpt0" path="res://levels/sprites/mapp.png" id="1_r40rr"]
+[ext_resource type="Script" path="res://levels/CharacterBody2D.gd" id="3_23kw6"]
+[ext_resource type="Texture2D" uid="uid://hbu1o8cub0f1" path="res://icon.svg" id="3_i3be5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ecbut"]
+size = Vector2(54, 38)
+
+[node name="BattleLevel" type="Node2D"]
+
+[node name="Mapp" type="Sprite2D" parent="."]
+position = Vector2(319.5, 177.5)
+scale = Vector2(0.887187, 0.850712)
+texture = ExtResource("1_r40rr")
+
+[node name="Byblade" parent="." instance=ExtResource("1_gffxu")]
+position = Vector2(313, 166)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("3_23kw6")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(212, 225)
+scale = Vector2(0.429688, 0.304688)
+texture = ExtResource("3_i3be5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(212, 225)
+shape = SubResource("RectangleShape2D_ecbut")
