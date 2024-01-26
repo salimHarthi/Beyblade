@@ -35,14 +35,15 @@ func collide( )-> void:
 	for i in get_slide_collision_count():
 		var collision_info = get_slide_collision(i)
 		var collider_name = collision_info.get_collider().name
-
+		
 		if collider_name == "Enemy":
 			var collider_velocity = collision_info.get_collider_velocity()
 			var normal = collision_info.get_normal()
 
 			# Calculate the new velocity based on the collider's velocity and the collision normal
 			velocity = collider_velocity.project(normal).normalized() * collider_velocity.length() * bounce_factor
-			
+		elif collider_name == "TileMap":
+			velocity=velocity.bounce(collision_info.get_normal())
 
 #func bounce_power_calc()->float:
 	#var bounce_power = collision_info.get_collider_velocity().length() - velocity.length()

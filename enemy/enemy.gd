@@ -28,7 +28,9 @@ func collide() -> void:
 
 			# Calculate the new velocity based on the collider's velocity and the collision normal
 			velocity = collider_velocity.project(normal).normalized() * collider_velocity.length() * bounce_factor
-
+		elif collider_name == "TileMap":
+			velocity=velocity.bounce(collision_info.get_normal())
+			
 func byblade_rotate(delta:float)->void:
 	$Sprite2D.rotation_degrees += 720 * delta
 	if rotation_degrees >=360:
