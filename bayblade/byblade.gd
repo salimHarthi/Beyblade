@@ -1,16 +1,17 @@
 extends CharacterBody2D
 class_name Byblade
 
-const max_speed = 200
+const max_speed = 300
 const accel = 10
 const fric = 10
 const bounce_factor = 0.5
-const dash_speed = 500
+const dash_speed = 600
 var dash_duration = 0.2
 var is_dashing = false
 var can_Dash = true
 var direction = Vector2.ZERO
 var helth = 1000
+var super_state = false
 
 func _ready() -> void:
 	motion_mode=CharacterBody2D.MOTION_MODE_FLOATING
@@ -20,6 +21,7 @@ func _physics_process(delta: float) -> void:
 	dash(delta)
 	collide()
 	move_and_slide()
+	start_super_state()
 	
 	
 func movment()->void:
@@ -39,6 +41,8 @@ func movment()->void:
 func collide( )-> void:
 	for i in get_slide_collision_count():
 		var collision_info = get_slide_collision(i)
+		if !collision_info.get_collider():
+			return
 		var collider_name = collision_info.get_collider().name
 		
 		if collider_name == "Enemy":
@@ -61,6 +65,12 @@ func dash(delta:float)-> void:
 			stop_dash()
 		
 
+func start_super_state():
+	if Input.is_action_just_pressed('super_state'):
+		super_state =true
+		print('super_state',super_state)
+		$SuperState.start()
+	
 func start_dash():
 	is_dashing = true
 	dash_duration = 0.2
@@ -88,6 +98,10 @@ func _on_dash_timer_timeout() -> void:
 	
 func take_damage(damage:float):
 	helth -= damage
-	if (helth <= 0):
-		queue_free()
+	#if (helth <= 0):
+		#queue_free()
 	
+
+
+func _on_super_state_timeout() -> void:
+	super_state = false

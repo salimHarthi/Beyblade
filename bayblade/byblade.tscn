@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://v8xg51dx15d8"]
 
 [ext_resource type="Script" path="res://bayblade/byblade.gd" id="1_hpstw"]
-[ext_resource type="Texture2D" uid="uid://dbwgcpte1o4yw" path="res://bayblade/sprite/Beyblades1.png" id="1_wxayo"]
+[ext_resource type="Texture2D" uid="uid://cjmn2ngvtber4" path="res://bayblade/sprite/Beyblades2_prev_ui.png" id="2_11dkp"]
 [ext_resource type="Script" path="res://bayblade/Sprite2D.gd" id="2_keg4l"]
 [ext_resource type="Script" path="res://scripts/hitBox.gd" id="5_p8urh"]
 
@@ -12,8 +12,8 @@ radius = 29.0172
 script = ExtResource("1_hpstw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_wxayo")
-hframes = 10
+texture = ExtResource("2_11dkp")
+hframes = 11
 vframes = 7
 script = ExtResource("2_keg4l")
 
@@ -29,9 +29,14 @@ one_shot = true
 script = ExtResource("5_p8urh")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox"]
-polygon = PackedVector2Array(4, -33, 2, 33, 18, 31, 34, 5, 23, -26)
+polygon = PackedVector2Array(3, -29, 3, 30, 17, 29, 32, 5, 20, -21)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 
+[node name="SuperState" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="SuperState" to="." method="_on_super_state_timeout"]

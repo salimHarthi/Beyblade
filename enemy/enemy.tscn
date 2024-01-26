@@ -1,26 +1,25 @@
 [gd_scene load_steps=6 format=3 uid="uid://8aerk712i3lg"]
 
-[ext_resource type="Texture2D" uid="uid://dbwgcpte1o4yw" path="res://bayblade/sprite/Beyblades1.png" id="1_0p4t1"]
 [ext_resource type="Script" path="res://enemy/enemy.gd" id="1_kcb8o"]
+[ext_resource type="Texture2D" uid="uid://cjmn2ngvtber4" path="res://bayblade/sprite/Beyblades2_prev_ui.png" id="2_aadk2"]
 [ext_resource type="Script" path="res://scripts/hurtBox.gd" id="3_pd0g4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i68b2"]
 radius = 29.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dok3f"]
-radius = 34.0147
+radius = 31.0161
 
 [node name="enemy" type="CharacterBody2D"]
 script = ExtResource("1_kcb8o")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_0p4t1")
+texture = ExtResource("2_aadk2")
 hframes = 10
 vframes = 7
 frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_i68b2")
 
 [node name="HurtBox" type="Area2D" parent="."]
