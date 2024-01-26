@@ -10,6 +10,7 @@ var dash_duration = 0.2
 var is_dashing = false
 var can_Dash = true
 var direction = Vector2.ZERO
+var helth = 1000
 
 func _ready() -> void:
 	motion_mode=CharacterBody2D.MOTION_MODE_FLOATING
@@ -82,10 +83,11 @@ func stop_dash():
 		#print("bounce_power loos",bounce_power)	
 		#return bounce_power * bounce_factor
 
-	
-	
-
-
 func _on_dash_timer_timeout() -> void:
 	can_Dash =true
+	
+func take_damage(damage:float):
+	helth -= damage
+	if (helth <= 0):
+		queue_free()
 	

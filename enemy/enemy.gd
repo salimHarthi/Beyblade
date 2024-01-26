@@ -6,7 +6,7 @@ const accel = 10
 const fric = 10
 const bounce_factor = 0.5
 var image:Sprite2D
-
+var helth = 1000
 
 func _ready() -> void:
 	image = $Sprite2D
@@ -35,3 +35,9 @@ func byblade_rotate(delta:float)->void:
 	$Sprite2D.rotation_degrees += 720 * delta
 	if rotation_degrees >=360:
 		rotation_degrees = 0 
+
+func take_damage(damage:float):
+	helth -= damage
+	print("helth",helth)
+	if (helth <= 0):
+		queue_free()

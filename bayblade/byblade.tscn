@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://v8xg51dx15d8"]
+[gd_scene load_steps=6 format=3 uid="uid://v8xg51dx15d8"]
 
 [ext_resource type="Script" path="res://bayblade/byblade.gd" id="1_hpstw"]
 [ext_resource type="Texture2D" uid="uid://dbwgcpte1o4yw" path="res://bayblade/sprite/Beyblades1.png" id="1_wxayo"]
@@ -7,19 +7,6 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_td6v4"]
 radius = 29.0172
-
-[sub_resource type="GDScript" id="GDScript_iwupx"]
-script/source = "extends Area2D
-
-
-
-func _on_area_entered(area: Area2D) -> void:
-	if area.name == 'hitBox' && area.owner.name != owner.name:
-		print(\"player\",area.damage)
-"
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_1iwq1"]
-radius = 34.1321
 
 [node name="Byblade" type="CharacterBody2D"]
 script = ExtResource("1_hpstw")
@@ -38,12 +25,6 @@ shape = SubResource("CircleShape2D_td6v4")
 wait_time = 0.504
 one_shot = true
 
-[node name="HurtBox" type="Area2D" parent="."]
-script = SubResource("GDScript_iwupx")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-shape = SubResource("CircleShape2D_1iwq1")
-
 [node name="HitBox" type="Area2D" parent="."]
 script = ExtResource("5_p8urh")
 
@@ -51,4 +32,3 @@ script = ExtResource("5_p8urh")
 polygon = PackedVector2Array(4, -33, 2, 33, 18, 31, 34, 5, 23, -26)
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
-[connection signal="area_entered" from="HurtBox" to="HurtBox" method="_on_area_entered"]
