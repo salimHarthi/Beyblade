@@ -5,7 +5,7 @@ signal on_damage
 const max_speed = 300
 const accel = 15
 const fric = 10
-const bounce_factor = 0.8
+const bounce_factor = 1.3
 const dash_speed = 600
 const max_helth = 10000
 var dash_duration = 0.2
@@ -20,6 +20,10 @@ var helth = 10000:
 var super_state = false : 
 	set(new_value):
 		super_state=new_value
+		if new_value:
+			$AnimationPlayer.play("super_state")
+		else:
+			$AnimationPlayer.play("idel")
 
 var PlayersArray = []
 

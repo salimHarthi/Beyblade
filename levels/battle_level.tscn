@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://detuwq1de4y4d"]
+[gd_scene load_steps=8 format=3 uid="uid://detuwq1de4y4d"]
 
 [ext_resource type="Script" path="res://levels/battle_level.gd" id="1_4itcq"]
 [ext_resource type="PackedScene" uid="uid://v8xg51dx15d8" path="res://bayblade/byblade.tscn" id="1_gffxu"]
 [ext_resource type="Texture2D" uid="uid://3iwgcv1djdw" path="res://levels/sprites/arena.png" id="1_x21s4"]
+[ext_resource type="Script" path="res://scripts/killZone.gd" id="4_od3id"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bi0h3"]
 texture = ExtResource("1_x21s4")
@@ -10130,6 +10131,9 @@ texture = ExtResource("1_x21s4")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_bi0h3")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sl5sv"]
+size = Vector2(120.31, 17.8305)
+
 [node name="BattleLevel" type="Node2D"]
 script = ExtResource("1_4itcq")
 PlayerScene = ExtResource("1_gffxu")
@@ -10147,3 +10151,35 @@ position = Vector2(150, 171)
 
 [node name="1" type="Node2D" parent="spwonLocation" groups=["playerSpawnPoint"]]
 position = Vector2(483, 171)
+
+[node name="KillZone" type="Area2D" parent="."]
+script = ExtResource("4_od3id")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+position = Vector2(116.415, -16.9404)
+rotation = -0.760964
+shape = SubResource("RectangleShape2D_sl5sv")
+
+[node name="KillZone2" type="Area2D" parent="."]
+script = ExtResource("4_od3id")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone2"]
+position = Vector2(516, -29)
+rotation = -2.40506
+shape = SubResource("RectangleShape2D_sl5sv")
+
+[node name="KillZone3" type="Area2D" parent="."]
+script = ExtResource("4_od3id")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone3"]
+position = Vector2(532, 371)
+rotation = -3.90081
+shape = SubResource("RectangleShape2D_sl5sv")
+
+[node name="KillZone3" type="Area2D" parent="KillZone3"]
+script = ExtResource("4_od3id")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone3/KillZone3"]
+position = Vector2(123, 383)
+rotation = -5.42797
+shape = SubResource("RectangleShape2D_sl5sv")
