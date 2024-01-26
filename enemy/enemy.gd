@@ -5,13 +5,15 @@ const max_speed = 200
 const accel = 10
 const fric = 10
 const bounce_factor = 0.5
-
+var image:Sprite2D
 
 
 func _ready() -> void:
+	image = $Sprite2D
 	motion_mode=CharacterBody2D.MOTION_MODE_FLOATING
 
 func _physics_process(delta: float) -> void:
+	byblade_rotate(delta)
 	collide()
 	move_and_slide()
 
@@ -27,3 +29,7 @@ func collide() -> void:
 			# Calculate the new velocity based on the collider's velocity and the collision normal
 			velocity = collider_velocity.project(normal).normalized() * collider_velocity.length() * bounce_factor
 
+func byblade_rotate(delta:float)->void:
+	$Sprite2D.rotation_degrees += 720 * delta
+	if rotation_degrees >=360:
+		rotation_degrees = 0 
