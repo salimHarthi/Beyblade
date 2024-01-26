@@ -8,7 +8,8 @@ const bounce_factor = 0.5
 
 var direction = Vector2.ZERO
 
-
+func _ready() -> void:
+	motion_mode=CharacterBody2D.MOTION_MODE_FLOATING
 
 func _physics_process(delta: float) -> void:
 	movment()
@@ -31,13 +32,16 @@ func movment()->void:
 		
 
 func collide( )-> void:
-		for i in get_slide_collision_count():
-			var collision_info = get_slide_collision(i)
-			print('player normal',collision_info.get_normal(),collision_info.get_remainder(),velocity)
-			if velocity == Vector2.ZERO:
-				velocity =collision_info.get_collider_velocity()
-			else:
-				velocity = collision_info.get_collider_velocity() * collision_info.get_normal()
+	for i in get_slide_collision_count():
+		var collision_info = get_slide_collision(i)
+		var collider_name = collision_info.get_collider().name
+
+		if collider_name == "Enemy":
+			var collider_velocity = collision_info.get_collider_velocity()
+			var normal = collision_info.get_normal()
+
+			# Calculate the new velocity based on the collider's velocity and the collision normal
+			velocity = collider_velocity.project(normal).normalized() * collider_velocity.length() * bounce_factor
 			
 
 #func bounce_power_calc()->float:

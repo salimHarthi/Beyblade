@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://detuwq1de4y4d"]
+[gd_scene load_steps=4 format=3 uid="uid://detuwq1de4y4d"]
 
 [ext_resource type="PackedScene" uid="uid://v8xg51dx15d8" path="res://bayblade/byblade.tscn" id="1_gffxu"]
 [ext_resource type="Texture2D" uid="uid://bshi0ghxhmpt0" path="res://levels/sprites/mapp.png" id="1_r40rr"]
+[ext_resource type="PackedScene" uid="uid://8aerk712i3lg" path="res://enemy/enemy.tscn" id="3_n6ajy"]
 
 [node name="BattleLevel" type="Node2D"]
 
@@ -11,4 +12,7 @@ scale = Vector2(0.887187, 0.850712)
 texture = ExtResource("1_r40rr")
 
 [node name="Byblade" parent="." instance=ExtResource("1_gffxu")]
-position = Vector2(313, 166)
+position = Vector2(422, 168)
+
+[node name="enemy" parent="." instance=ExtResource("3_n6ajy")]
+position = Vector2(267, 169)
