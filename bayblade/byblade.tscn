@@ -3,11 +3,20 @@
 [ext_resource type="Script" path="res://bayblade/byblade.gd" id="1_hpstw"]
 [ext_resource type="Texture2D" uid="uid://dbwgcpte1o4yw" path="res://bayblade/sprite/Beyblades1.png" id="1_wxayo"]
 [ext_resource type="Script" path="res://bayblade/Sprite2D.gd" id="2_keg4l"]
-[ext_resource type="Script" path="res://bayblade/HurtBox.gd" id="4_1lsxg"]
-[ext_resource type="Script" path="res://bayblade/hitBox.gd" id="4_iiuh0"]
+[ext_resource type="Script" path="res://scripts/hitBox.gd" id="5_p8urh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_td6v4"]
 radius = 29.0172
+
+[sub_resource type="GDScript" id="GDScript_iwupx"]
+script/source = "extends Area2D
+
+
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.name == 'hitBox' && area.owner.name != owner.name:
+		print(\"player\",area.damage)
+"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1iwq1"]
 radius = 34.1321
@@ -30,16 +39,16 @@ wait_time = 0.504
 one_shot = true
 
 [node name="HurtBox" type="Area2D" parent="."]
-script = ExtResource("4_1lsxg")
+script = SubResource("GDScript_iwupx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource("CircleShape2D_1iwq1")
 
-[node name="hitBox" type="Area2D" parent="."]
-script = ExtResource("4_iiuh0")
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("5_p8urh")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="hitBox"]
-polygon = PackedVector2Array(24, -24, 35, 0, 34, 10, 22, 28, 4, 33, 5, -31)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox"]
+polygon = PackedVector2Array(4, -33, 2, 33, 18, 31, 34, 5, 23, -26)
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="area_entered" from="HurtBox" to="HurtBox" method="_on_area_entered"]
