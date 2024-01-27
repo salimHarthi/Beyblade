@@ -16,7 +16,7 @@ func playerdisconnected(id):
 	for i in $ItemList.get_item_count():
 		if $ItemList.get_item_text(i) == str(id):
 			$ItemList.remove_item(i)
-	print("player disconnected ",id)
+	print("player disconnected lobby ",id)
 
 
 func _on_start_button_down() -> void:
@@ -29,3 +29,14 @@ func startGame():
 	var scene = load("res://levels/battle_level.tscn").instantiate()
 	get_tree().root.add_child(scene)
 	self.hide()
+
+
+func _on_leave_button_down() -> void:
+	var node = get_tree().root.get_children()
+	for i in node:
+		if i.name =='Control':
+			i.peer.close()
+			GameManager.Players = {}
+			i.show()
+			queue_free()
+	

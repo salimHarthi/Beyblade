@@ -12,6 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_3t050")
 
 [node name="serverIp" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = 129.0
 offset_top = 217.0
 offset_right = 363.0
@@ -20,6 +21,7 @@ text = "127.0.0.1"
 placeholder_text = "Ip address"
 
 [node name="Label3" type="Label" parent="serverIp"]
+layout_mode = 0
 offset_top = -24.0
 offset_right = 97.0
 offset_bottom = -1.0
@@ -67,6 +69,7 @@ offset_bottom = -8.0
 text = "Player name"
 
 [node name="port" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = 367.0
 offset_top = 217.0
 offset_right = 434.063
@@ -75,6 +78,7 @@ text = "8910"
 placeholder_text = "name"
 
 [node name="Label2" type="Label" parent="port"]
+layout_mode = 0
 offset_left = 4.0
 offset_top = -24.0
 offset_right = 101.0

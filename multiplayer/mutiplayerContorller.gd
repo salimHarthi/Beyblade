@@ -1,6 +1,7 @@
+class_name MainPage
 extends Control
 
-var address = ""
+var address = "0.0.0.0"
 var port = 8910
 var peer:ENetMultiplayerPeer
 func _ready() -> void:
@@ -32,6 +33,7 @@ func startGame():
 
 func hostGame():
 	peer = ENetMultiplayerPeer.new()
+	port = int($port.text)
 	var error =peer.create_server(port,2)
 	if error != OK:
 		print("error ",error)
@@ -53,6 +55,7 @@ func _on_join_button_down() -> void:
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client(address,port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+
 	multiplayer.set_multiplayer_peer(peer)
 	var scene = load("res://multiplayer/lobby.tscn").instantiate()
 	get_tree().root.add_child(scene)
@@ -62,15 +65,17 @@ func _on_join_button_down() -> void:
 
 
 func _on_start_button_down() -> void:
-	startGame.rpc()
+	#startGame.rpc()
 	pass # Replace with function body.
 
 func playerConnected(id):
 	print("playerConnected ",id)
 	
 func playerdisconnected(id):
-	print("player disconnected ",id)
+	print("player disconnected contorl",id)
+	print(GameManager.Players)
 	GameManager.Players.erase(id)
+	print(GameManager.Players)
 	var players = get_tree().get_nodes_in_group('player')
 	for i in players:
 		if i.name == str(id):
