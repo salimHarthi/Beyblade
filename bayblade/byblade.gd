@@ -37,7 +37,10 @@ func _ready() -> void:
 	for i in GameManager.Players:
 		if(multiplayer.get_unique_id() !=i):
 			PlayersArray.append(str(i))
-
+		if name== str(i):
+			$playerName.text = GameManager.Players[i].name
+			
+	
 
 func _physics_process(delta: float) -> void:
 	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id(): return

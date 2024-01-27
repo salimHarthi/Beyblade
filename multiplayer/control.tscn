@@ -11,37 +11,75 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3t050")
 
+[node name="serverIp" type="LineEdit" parent="."]
+offset_left = 129.0
+offset_top = 217.0
+offset_right = 363.0
+offset_bottom = 248.0
+text = "127.0.0.1"
+placeholder_text = "Ip address"
+
+[node name="Label3" type="Label" parent="serverIp"]
+offset_top = -24.0
+offset_right = 97.0
+offset_bottom = -1.0
+text = "Server IP"
+
 [node name="Host" type="Button" parent="."]
 layout_mode = 0
-offset_left = 129.0
-offset_top = 167.0
-offset_right = 185.0
-offset_bottom = 198.0
+offset_left = 130.0
+offset_top = 144.0
+offset_right = 186.0
+offset_bottom = 175.0
 text = "Host"
 
 [node name="Join" type="Button" parent="."]
 layout_mode = 0
-offset_left = 226.0
-offset_top = 170.0
-offset_right = 275.0
-offset_bottom = 201.0
+offset_left = 444.0
+offset_top = 217.0
+offset_right = 493.0
+offset_bottom = 248.0
 text = "Join"
 
 [node name="Start" type="Button" parent="."]
+visible = false
 layout_mode = 0
-offset_left = 299.0
-offset_top = 171.0
-offset_right = 354.0
-offset_bottom = 202.0
+offset_left = 205.0
+offset_top = 137.0
+offset_right = 260.0
+offset_bottom = 168.0
 text = "start"
 
 [node name="LineEdit" type="LineEdit" parent="."]
 layout_mode = 0
-offset_left = 127.0
-offset_top = 123.0
-offset_right = 361.0
-offset_bottom = 154.0
+offset_left = 131.0
+offset_top = 95.0
+offset_right = 365.0
+offset_bottom = 126.0
 placeholder_text = "name"
+
+[node name="Label" type="Label" parent="LineEdit"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -31.0
+offset_right = 99.0
+offset_bottom = -8.0
+text = "Player name"
+
+[node name="port" type="LineEdit" parent="."]
+offset_left = 367.0
+offset_top = 217.0
+offset_right = 434.063
+offset_bottom = 248.0
+text = "8910"
+placeholder_text = "name"
+
+[node name="Label2" type="Label" parent="port"]
+offset_left = 4.0
+offset_top = -24.0
+offset_right = 101.0
+offset_bottom = -1.0
+text = "Port"
 
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
