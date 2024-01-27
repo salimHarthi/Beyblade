@@ -50,6 +50,7 @@ func _on_host_button_down() -> void:
 	sendPlayerInfo($LineEdit.text,multiplayer.get_unique_id())
 
 func _on_join_button_down() -> void:
+	GameManager.Players = {}
 	address = $serverIp.text
 	port = int($port.text)
 	peer = ENetMultiplayerPeer.new()
@@ -73,9 +74,7 @@ func playerConnected(id):
 	
 func playerdisconnected(id):
 	print("player disconnected contorl",id)
-	print(GameManager.Players)
 	GameManager.Players.erase(id)
-	print(GameManager.Players)
 	var players = get_tree().get_nodes_in_group('player')
 	for i in players:
 		if i.name == str(id):
